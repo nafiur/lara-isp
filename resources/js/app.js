@@ -12,3 +12,15 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.start();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebarWrapper = document.querySelector('.sidebar-wrapper');
+
+    if (sidebarWrapper && window.OverlayScrollbars) {
+        window.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: { autoHide: 'leave' },
+        });
+    }
+
+    document.body.classList.add('app-loaded');
+});

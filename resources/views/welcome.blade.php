@@ -36,11 +36,11 @@
 <body>
     <div class="card border-0">
         <div class="card-body p-5 p-md-6">
-            <span class="badge bg-primary bg-opacity-25 text-primary fw-semibold mb-3">
+            <span class="badge bg-primary-subtle text-primary fw-semibold mb-3">
                 ISP Management Platform
             </span>
             <h1 class="display-6 fw-semibold lh-sm mb-3">{{ config('app.name', 'ISP Management System') }}</h1>
-            <p class="lead text-secondary-emphasis mb-4">
+            <p class="lead text-white-50 mb-4">
                 Manage subscribers, automate billing, and keep your network in sync from a single command center.
             </p>
             <div class="d-flex flex-wrap gap-3">
