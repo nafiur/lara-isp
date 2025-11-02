@@ -23,8 +23,7 @@
             [
                 'label' => __('Core Setup'),
                 'icon' => 'fas fa-layer-group',
-                'disabled' => true,
-                'badge' => ['label' => __('Soon'), 'class' => 'bg-secondary'],
+                'route' => 'setup.core',
             ],
             [
                 'label' => __('CRM'),
