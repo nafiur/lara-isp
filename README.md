@@ -1,67 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ISP Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Production-grade ISP management platform built with Laravel 11. The application targets multi-company internet providers and delivers CRM, billing automation, network provisioning, inventory, and payment integrations tailored to the Bangladeshi market.
 
-## About Laravel
+## Feature Scope
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Multi-company and multi-branch tenancy with granular RBAC (Spatie Permission).
+- CRM for subscribers, resellers, and prospects with onboarding workflows.
+- Automated recurring billing with PDF invoices, SMS/email reminders, and dunning.
+- Mikrotik RouterOS integration for PPPoE and Hotspot lifecycle management.
+- Local payment gateway support (SSLCommerz, bKash, Nagad, aamarPay).
+- Procurement and stock tracking for networking equipment and consumables.
+- Scheduler-driven jobs for billing cycles, router sync, and messaging.
+- Observability via queues, audit logs, and health checks.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Area | Selection |
+| --- | --- |
+| Framework | Laravel 11, PHP 8.2 |
+| UI | Bootstrap 5, Vite, Blade |
+| Auth | Laravel Breeze, Sanctum |
+| RBAC | spatie/laravel-permission |
+| PDFs | barryvdh/laravel-dompdf |
+| Monitoring | spatie/laravel-health |
+| Audit | spatie/laravel-activitylog |
+| Charts | ApexCharts, Laravel Trend |
+| Queue | Redis |
 
-## Learning Laravel
+## Getting Started
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.2 with required Laravel extensions.
+- Composer 2.6+.
+- Node.js 20+ and PNPM/Yarn/NPM.
+- MySQL 8 (or MariaDB 10.6+), Redis 6+.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation
 
-## Laravel Sponsors
+```bash
+cp .env.example .env
+composer install
+php artisan key:generate
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Update `.env` with database, Redis, SMS, and payment credentials. The defaults assume MySQL on `127.0.0.1` and Redis on its standard port.
 
-### Premium Partners
+### Local Development
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+php artisan migrate
+php artisan serve
+npm run dev
+```
 
-## Contributing
+Background workers and scheduled tasks rely on Redis connections:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan queue:work
+php artisan schedule:work
+```
 
-## Code of Conduct
+## Domain Structure
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Source lives under `app/Domain`, organized by bounded context:
 
-## Security Vulnerabilities
+- `Core`: shared contracts, value objects, domain events.
+- `CRM`: clients, resellers, leads, onboarding flows.
+- `Billing`: plans, subscriptions, invoices, payments, dunning.
+- `Network`: Mikrotik integration, provisioning jobs, router sync.
+- `Inventory`: procurement, stock control, asset assignments.
+- `Payments`: gateway integrations and payment orchestration.
+- `Scheduling`: cron definitions, job coordination, automation.
+- `Support`: cross-cutting services, traits, helpers.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Each module will expose:
 
-## License
+- Eloquent models with typed attributes and query scopes.
+- Actions/Services orchestrating use cases.
+- HTTP controllers, API resources, and form requests.
+- Jobs, listeners, and notifications for async workflows.
+- Pest test coverage (unit, feature, integration).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# lara-isp
+## Roadmap
+
+1. Authentication scaffolding (Breeze + Sanctum) with role seeds.
+2. Multi-tenant foundation and company/branch management.
+3. CRM module: subscriber lifecycle and contact management.
+4. Billing engine: plans, subscriptions, automated invoices.
+5. Payment gateway integrations and reconciliation.
+6. Mikrotik provisioning services and router sync jobs.
+7. Inventory management and procurement workflows.
+8. Observability: health checks, activity logs, audit trails.
+
+Track progress via project boards or issues. Contributions should follow PSR-12 and include relevant tests.
