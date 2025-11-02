@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -50,17 +49,4 @@ class User extends Authenticatable
         ];
     }
 
-    public function companies(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class)
-            ->withPivot(['is_owner', 'joined_at'])
-            ->withTimestamps();
-    }
-
-    public function branches(): BelongsToMany
-    {
-        return $this->belongsToMany(Branch::class)
-            ->withPivot(['position', 'assigned_at'])
-            ->withTimestamps();
-    }
 }

@@ -19,11 +19,7 @@
                 'label' => __('Dashboard'),
                 'icon' => 'fas fa-gauge',
                 'route' => 'dashboard',
-            ],
-            [
-                'label' => __('Core Setup'),
-                'icon' => 'fas fa-layer-group',
-                'route' => 'setup.core',
+                'active' => 'dashboard',
             ],
             [
                 'label' => __('CRM'),
@@ -40,8 +36,9 @@
             [
                 'label' => __('Network'),
                 'icon' => 'fas fa-network-wired',
-                'disabled' => true,
-                'badge' => ['label' => __('Soon'), 'class' => 'bg-secondary'],
+                'route' => 'network.routers.index',
+                'active' => 'network.routers.*',
+                'can' => 'network.view',
             ],
             [
                 'label' => __('Inventory'),
@@ -118,8 +115,11 @@
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" role="menu" data-lte-toggle="treeview">
                         @foreach ($navigation as $item)
+                            @continue(isset($item['can']) && ! $user?->can($item['can']))
+
                             @php
-                                $isActive = isset($item['route']) ? request()->routeIs($item['route']) : false;
+                                $activePattern = $item['active'] ?? $item['route'] ?? null;
+                                $isActive = $activePattern ? request()->routeIs($activePattern) : false;
                                 $linkClasses = collect([
                                     'nav-link',
                                     $isActive ? 'active' : null,

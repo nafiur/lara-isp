@@ -4,11 +4,10 @@ This roadmap breaks the build into incremental milestones. Each milestone ships 
 
 ## Milestone 1 – Platform Foundations
 
-- 1.1 Configure multi-company/branch schema (organizations, branches, tenant context middleware).
-- 1.2 Seed core roles/permissions (super admin, branch admin, billing ops, network engineer, support).
-- 1.3 Implement global settings module (billing cycle defaults, Mikrotik credentials, SMS providers).
-- 1.4 Harden authentication: enforce email verification, password policies, 2FA placeholder.
-- 1.5 Set up Horizon, queue workers, health checks, and logging dashboards.
+- 1.1 Seed core roles/permissions (super admin, operations, billing ops, network engineer, support).
+- 1.2 Implement global settings module (billing cycle defaults, Mikrotik credentials, SMS providers).
+- 1.3 Harden authentication: enforce email verification, password policies, 2FA placeholder.
+- 1.4 Set up Horizon, queue workers, health checks, and logging dashboards.
 
 ## Milestone 2 – CRM & Customer Lifecycle
 
@@ -42,7 +41,7 @@ This roadmap breaks the build into incremental milestones. Each milestone ships 
 
 ## Milestone 6 – Inventory & Procurement
 
-- 6.1 Warehouses/branches inventory, stock movement ledger.
+- 6.1 Inventory tracking, stock movement ledger, and location tags.
 - 6.2 Purchase orders, vendor management, and GRN workflows.
 - 6.3 Fast assignment of CPE devices to subscribers with QR/barcode support.
 - 6.4 Low stock alerts and reorder suggestions.

@@ -168,10 +168,22 @@
                         <span><i class="fas fa-file-invoice me-2 text-primary"></i>{{ __('Create invoice batch') }}</span>
                         <span class="badge bg-secondary">{{ __('Soon') }}</span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">
-                        <span><i class="fas fa-network-wired me-2 text-success"></i>{{ __('Provision Mikrotik users') }}</span>
-                        <span class="badge bg-secondary">{{ __('Soon') }}</span>
-                    </a>
+                    @can('network.manage')
+                        <a href="{{ route('network.routers.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-network-wired me-2 text-success"></i>{{ __('Manage routers') }}</span>
+                            <span class="badge bg-success-subtle text-success">{{ __('Live') }}</span>
+                        </a>
+                    @elseif(auth()->user()?->can('network.view'))
+                        <a href="{{ route('network.routers.index') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-network-wired me-2 text-success"></i>{{ __('View routers') }}</span>
+                            <span class="badge bg-primary-subtle text-primary">{{ __('View only') }}</span>
+                        </a>
+                    @else
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">
+                            <span><i class="fas fa-network-wired me-2 text-success"></i>{{ __('Manage routers') }}</span>
+                            <span class="badge bg-secondary">{{ __('Access required') }}</span>
+                        </a>
+                    @endcan
                     <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">
                         <span><i class="fas fa-credit-card me-2 text-info"></i>{{ __('Sync payment gateway') }}</span>
                         <span class="badge bg-secondary">{{ __('Soon') }}</span>

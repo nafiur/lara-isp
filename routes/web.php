@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CoreSetupController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Network\RouterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +14,16 @@ Route::get('/dashboard', DashboardController::class)
     ->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/setup/core', [CoreSetupController::class, 'index'])->name('setup.core');
-    Route::post('/setup/core', [CoreSetupController::class, 'update'])->name('setup.core.update');
+    Route::resource('network/routers', RouterController::class)
+        ->except('show')
+        ->middleware([
+            'index' => 'can:network.view',
+            'create' => 'can:network.manage',
+            'store' => 'can:network.manage',
+            'edit' => 'can:network.manage',
+            'update' => 'can:network.manage',
+            'destroy' => 'can:network.manage',
+        ]);
 });
 
 Route::middleware('auth')->group(function () {

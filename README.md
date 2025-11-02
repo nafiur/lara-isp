@@ -1,10 +1,10 @@
 # ISP Management System
 
-Production-grade ISP management platform built with Laravel 11. The application targets multi-company internet providers and delivers CRM, billing automation, network provisioning, inventory, and payment integrations tailored to the Bangladeshi market.
+Production-grade ISP management platform built with Laravel 11. The application targets single-operator service providers and delivers CRM, billing automation, network provisioning, inventory, and payment integrations tailored to the Bangladeshi market.
 
 ## Feature Scope
 
-- Multi-company and multi-branch tenancy with granular RBAC (Spatie Permission).
+- Role-based access control (Spatie Permission) for operations, billing, network, and support teams.
 - CRM for subscribers, resellers, and prospects with onboarding workflows.
 - Automated recurring billing with PDF invoices, SMS/email reminders, and dunning.
 - Mikrotik RouterOS integration for PPPoE and Hotspot lifecycle management.
@@ -86,12 +86,11 @@ Each module will expose:
 ## Roadmap
 
 1. Authentication scaffolding (Breeze + Sanctum) with role seeds.
-2. Multi-tenant foundation and company/branch management.
-3. CRM module: subscriber lifecycle and contact management.
-4. Billing engine: plans, subscriptions, automated invoices.
-5. Payment gateway integrations and reconciliation.
-6. Mikrotik provisioning services and router sync jobs.
-7. Inventory management and procurement workflows.
-8. Observability: health checks, activity logs, audit trails.
+2. CRM module: subscriber lifecycle and contact management.
+3. Billing engine: plans, subscriptions, automated invoices.
+4. Payment gateway integrations and reconciliation.
+5. Mikrotik provisioning services and router sync jobs.
+6. Inventory management and procurement workflows.
+7. Observability: health checks, activity logs, audit trails.
 
 Track progress via project boards or issues. Contributions should follow PSR-12 and include relevant tests.
